@@ -13,7 +13,9 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    docker.image('python:3.10-slim').inside("-v ${env.WORKSPACE}:/app -w /app") {
+                    docker.image('python:3.10-slim').inside(
+                        "--user root -v ${env.WORKSPACE}:/app -w /app"
+                    ) {
                         sh '''
                           pip install -r requirements.txt
                           pytest
@@ -22,6 +24,7 @@ pipeline {
                 }
             }
         }
+
 
         stage('Build Docker Image') {
             steps {
