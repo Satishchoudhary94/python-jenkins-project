@@ -5,10 +5,13 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    credentialsId: 'github-creds',
+                    url: 'https://github.com/Satishchoudhary94/python-jenkins-project.git'
                 sh 'ls -l'
             }
         }
+
 
         stage('Run Tests') {
             steps {
