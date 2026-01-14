@@ -13,10 +13,10 @@ pipeline {
         steps {
             sh '''
             docker run --rm \
-              -v "$PWD":/app \
+              -v "$WORKSPACE":/app \
               -w /app \
               python:3.10-slim \
-              sh -c "pip install -r requirements.txt && pytest"
+              sh -c "ls -l && pip install -r requirements.txt && pytest"
             '''
         }
     }
