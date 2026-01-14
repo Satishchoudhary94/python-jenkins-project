@@ -3,23 +3,24 @@ pipeline {
 
     stages {
 
-        stage('Checkout') {
+        stage('Checkout Code') {
             steps {
-                echo 'Code checked out from GitHub'
+                checkout scm
+                sh 'ls -l'
             }
         }
 
-    stage('Run Tests') {
-        steps {
-            sh '''
-            docker run --rm \
-              -v "$WORKSPACE":/app \
-              -w /app \
-              python:3.10-slim \
-              sh -c "ls -l && pip install -r requirements.txt && pytest"
-            '''
+        stage('Run Tests') {
+            steps {
+                sh '''
+                docker run --rm \
+                  -v "$WORKSPACE":/app \
+                  -w /app \
+                  python:3.10-slim \
+                  sh -c "pip install -r requirements.txt && pytest"
+                '''
+            }
         }
-    }
 
         stage('Build Docker Image') {
             steps {
@@ -31,7 +32,9 @@ pipeline {
             steps {
                 sh '''
                 docker rm -f python-jenkins-container || true
-                docker run -d -p 5002:5000 --name python-jenkins-container python-jenkins-app
+                docker run -d -p 5002:5000 \
+                  --name python-jenkins-container \
+                  python-jenkins-app
                 '''
             }
         }
