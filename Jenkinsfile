@@ -3,9 +3,18 @@ pipeline {
 
     stages {
 
-        stage('Clone Code') {
+        stage('Checkout') {
             steps {
-                echo 'Code cloned from GitHub'
+                echo 'Code checked out from GitHub'
+            }
+        }
+
+        stage('Run Tests') {
+            steps {
+                sh '''
+                pip install -r requirements.txt
+                pytest
+                '''
             }
         }
 
