@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    environment {
+        IMAGE_NAME = "python-jenkins-app"
+        IMAGE_TAG  = "${BUILD_NUMBER}"
+    }
+
     stages {
 
         stage('Checkout Code') {
@@ -11,7 +16,6 @@ pipeline {
                 sh 'ls -l'
             }
         }
-
 
         stage('Run Tests') {
             steps {
@@ -28,20 +32,50 @@ pipeline {
             }
         }
 
-
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t python-jenkins-app .'
+                sh """
+                  docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .
+                  docker tag ${IMAGE_NAME}:${IMAGE_TAG} ${IMAGE_NAME}:latest
+                """
             }
         }
 
-        stage('Run Container') {
+        stage('Deploy DEV') {
             steps {
                 sh '''
-                  docker rm -f python-jenkins-container || true
+                  docker rm -f python-app-dev || true
                   docker run -d -p 5002:5000 \
-                    --name python-jenkins-container \
-                    python-jenkins-app
+                    --name python-app-dev \
+                    python-jenkins-app:latest
+                '''
+            }
+        }
+
+        stage('Deploy STAGING') {
+            steps {
+                sh '''
+                  docker rm -f python-app-staging || true
+                  docker run -d -p 5003:5000 \
+                    --name python-app-staging \
+                    python-jenkins-app:latest
+                '''
+            }
+        }
+
+        stage('Approve PROD Deployment') {
+            steps {
+                input message: 'Deploy to PRODUCTION?', ok: 'YES, DEPLOY'
+            }
+        }
+
+        stage('Deploy PROD') {
+            steps {
+                sh '''
+                  docker rm -f python-app-prod || true
+                  docker run -d -p 5004:5000 \
+                    --name python-app-prod \
+                    python-jenkins-app:latest
                 '''
             }
         }
