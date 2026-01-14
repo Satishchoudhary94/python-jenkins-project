@@ -120,7 +120,7 @@ Build: ${BUILD_NUMBER}
 Logs:
 ${BUILD_URL}
 """,
-                to: "yourmail@gmail.com"
+                to: "Satishchaudhary@gmail.com"
             )
         }
     }
