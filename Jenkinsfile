@@ -104,7 +104,7 @@ ${BUILD_URL}
 Regards,
 Jenkins
 """,
-                to: "yourmail@gmail.com"
+                to: "Satishchaudhary877@gmail.com"
             )
         }
 
@@ -120,7 +120,7 @@ Build: ${BUILD_NUMBER}
 Logs:
 ${BUILD_URL}
 """,
-                to: "Satishchaudhary@gmail.com"
+                to: "Satishchaudhary877@gmail.com"
             )
         }
     }
