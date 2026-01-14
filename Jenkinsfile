@@ -80,4 +80,48 @@ pipeline {
             }
         }
     }
+
+    post {
+
+        success {
+            emailext(
+                subject: "✅ SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+Hi Team,
+
+✅ Build SUCCESSFUL
+
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+
+DEV     → http://localhost:5002
+STAGING → http://localhost:5003
+PROD    → http://localhost:5004
+
+Logs:
+${BUILD_URL}
+
+Regards,
+Jenkins
+""",
+                to: "yourmail@gmail.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "❌ FAILURE: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+❌ Build FAILED
+
+Job: ${JOB_NAME}
+Build: ${BUILD_NUMBER}
+
+Logs:
+${BUILD_URL}
+""",
+                to: "yourmail@gmail.com"
+            )
+        }
+    }
 }
