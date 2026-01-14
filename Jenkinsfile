@@ -9,14 +9,17 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                sh '''
-                pip install -r requirements.txt
-                pytest
-                '''
-            }
+    stage('Run Tests') {
+        steps {
+            sh '''
+            docker run --rm \
+              -v "$PWD":/app \
+              -w /app \
+              python:3.10-slim \
+              sh -c "pip install -r requirements.txt && pytest"
+            '''
         }
+    }
 
         stage('Build Docker Image') {
             steps {
