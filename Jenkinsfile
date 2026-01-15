@@ -112,7 +112,7 @@ pipeline {
 
         failure {
             emailext(
-                subject: "❌ FAILED | ${JOB_NAME} #${BUILD_NUMBER}",
+                subject: "❌ xFAILED | ${JOB_NAME} #${BUILD_NUMBER}",
                 mimeType: 'text/html',
                 body: """
                 <h2 style="color:red;">Build FAILED</h2>
