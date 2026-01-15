@@ -81,47 +81,42 @@ pipeline {
         }
     }
 
-    post {
+post {
+    success {
+        emailext(
+            subject: "✅ SUCCESS | ${JOB_NAME} #${BUILD_NUMBER}",
+            mimeType: 'text/html',
+            body: """
+            <h2 style="color:green;">Build SUCCESS</h2>
+            <b>Job:</b> ${JOB_NAME}<br>
+            <b>Build:</b> ${BUILD_NUMBER}<br><br>
 
-        success {
-            emailext(
-                subject: "✅ SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
-                body: """
-Hi Team,
+            <b>Environments:</b><br>
+            DEV → <a href="http://localhost:5002">http://localhost:5002</a><br>
+            STAGING → <a href="http://localhost:5003">http://localhost:5003</a><br>
+            PROD → <a href="http://localhost:5004">http://localhost:5004</a><br><br>
 
-✅ Build SUCCESSFUL
+            <b>Logs:</b><br>
+            <a href="${BUILD_URL}">${BUILD_URL}</a>
+            """,
+            to: "satishchaudhary877@gmail.com"
+        )
+    }
 
-Job: ${JOB_NAME}
-Build Number: ${BUILD_NUMBER}
+    failure {
+        emailext(
+            subject: "❌ FAILED | ${JOB_NAME} #${BUILD_NUMBER}",
+            mimeType: 'text/html',
+            body: """
+            <h2 style="color:red;">Build FAILED</h2>
+            <b>Job:</b> ${JOB_NAME}<br>
+            <b>Build:</b> ${BUILD_NUMBER}<br><br>
 
-DEV     → http://localhost:5002
-STAGING → http://localhost:5003
-PROD    → http://localhost:5004
-
-Logs:
-${BUILD_URL}
-
-Regards,
-Jenkins
-""",
-                to: "Satishchaudhary877@gmail.com"
-            )
-        }
-
-        failure {
-            emailext(
-                subject: "❌ FAILURE: ${JOB_NAME} #${BUILD_NUMBER}",
-                body: """
-❌ Build FAILED
-
-Job: ${JOB_NAME}
-Build: ${BUILD_NUMBER}
-
-Logs:
-${BUILD_URL}
-""",
-                to: "Satishchaudhary877@gmail.com"
-            )
-        }
+            <b>Logs:</b><br>
+            <a href="${BUILD_URL}">${BUILD_URL}</a>
+            """,
+            to: "satishchaudhary877@gmail.com"
+        )
     }
 }
+
