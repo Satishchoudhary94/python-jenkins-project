@@ -91,37 +91,47 @@ pipeline {
     }
 
     post {
+
         success {
             emailext(
-                subject: "✅ xSUCCESS | ${JOB_NAME} #${BUILD_NUMBER}",
+                from: 'Satishchaudhary877@gmail.com',
+                replyTo: 'Satishchaudhary877@gmail.com',
+                to: 'Satishchaudhary877@gmail.com',
+                subject: "✅ SUCCESS | ${JOB_NAME} #${BUILD_NUMBER}",
                 mimeType: 'text/html',
                 body: """
                 <h2 style="color:green;">Build SUCCESS</h2>
                 <b>Job:</b> ${JOB_NAME}<br>
                 <b>Build:</b> ${BUILD_NUMBER}<br><br>
 
+                <b>Applications:</b><br>
                 DEV → http://localhost:5002<br>
                 STAGING → http://localhost:5003<br>
                 PROD → http://localhost:5004<br><br>
 
-                <a href="${BUILD_URL}">View Logs</a>
-                """,
-                to: "satishchaudhary877@gmail.com"
+                <a href="${BUILD_URL}">View Jenkins Logs</a><br><br>
+
+                — Jenkins CI
+                """
             )
         }
 
         failure {
             emailext(
-                subject: "❌ xFAILED | ${JOB_NAME} #${BUILD_NUMBER}",
+                from: 'Satishchaudhary877@gmail.com',
+                replyTo: 'Satishchaudhary877@gmail.com',
+                to: 'Satishchaudhary877@gmail.com',
+                subject: "❌ FAILED | ${JOB_NAME} #${BUILD_NUMBER}",
                 mimeType: 'text/html',
                 body: """
                 <h2 style="color:red;">Build FAILED</h2>
                 <b>Job:</b> ${JOB_NAME}<br>
                 <b>Build:</b> ${BUILD_NUMBER}<br><br>
 
-                <a href="${BUILD_URL}">View Logs</a>
-                """,
-                to: "satishchaudhary877@gmail.com"
+                <a href="${BUILD_URL}">View Jenkins Logs</a><br><br>
+
+                — Jenkins CI
+                """
             )
         }
     }
