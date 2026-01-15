@@ -93,7 +93,7 @@ pipeline {
     post {
         success {
             emailext(
-                subject: "✅ SUCCESS | ${JOB_NAME} #${BUILD_NUMBER}",
+                subject: "✅ xSUCCESS | ${JOB_NAME} #${BUILD_NUMBER}",
                 mimeType: 'text/html',
                 body: """
                 <h2 style="color:green;">Build SUCCESS</h2>
