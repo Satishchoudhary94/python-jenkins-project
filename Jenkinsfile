@@ -69,9 +69,9 @@ PROD : http://localhost:5004
 Logs:
 ${BUILD_URL}
 """,
-                to: "satishchaudhary877@gmail.com",
+                to: "Satishchaudhary877@gmail.com",
                 from: "jenkins@localhost",
-                replyTo: "satishchaudhary877@gmail.com"
+                replyTo: "Satishchaudhary877@gmail.com"
             )
         }
 
@@ -87,9 +87,9 @@ Build: ${BUILD_NUMBER}
 Logs:
 ${BUILD_URL}
 """,
-                to: "satishchaudhary877@gmail.com",
+                to: "Satishchaudhary877@gmail.com",
                 from: "jenkins@localhost",
-                replyTo: "satishchaudhary877@gmail.com"
+                replyTo: "Satishchaudhary877@gmail.com"
             )
         }
     }
